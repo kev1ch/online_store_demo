@@ -16,3 +16,8 @@ create table product(
 	store_id int,
 	foreign key (store_id) references store(id) on delete cascade
 );
+
+INSERT INTO store (id, name, street, city, postal_code) VALUES (1, 'Test Store', 'Test Street', 'Test City', '123123');
+INSERT INTO product (id, name, store_id) VALUES (1, 'Test Product 1', 1);
+INSERT INTO product (id, name, store_id) VALUES (2, 'Test Product 2', 1);
+INSERT INTO product (id, name, store_id) VALUES (3, 'Test Product 3', 1);
