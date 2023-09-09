@@ -2,10 +2,7 @@ package com.pavlov.onlinestore;
 
 
 import lombok.SneakyThrows;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -43,6 +40,23 @@ public class ProductController {
 
         return result;
 
+    }
+
+    @PostMapping("/")
+    public String createProduct(@RequestParam String name, @RequestParam int store_id) {
+        return "createProduct called";
+    }
+
+    @SneakyThrows
+    @DeleteMapping("/")
+    public String deleteProduct(@RequestParam int id) {
+        Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
+        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/online_store?" +
+                "user=root&password=");
+        PreparedStatement statement = connection.prepareStatement("delete from product where id = ?");
+        statement.setInt(1, id);
+        statement.execute();
+        return "deleteProduct called";
     }
 
 }
