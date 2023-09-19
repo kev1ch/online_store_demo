@@ -10,6 +10,10 @@ create table store(
 	postal_code char(6)
 );
 
+create table customer(
+	id int primary key auto_increment
+);
+
 create table product(
 	id int primary key auto_increment,
 	name varchar(255),
@@ -22,6 +26,64 @@ create table price(
 	rate decimal(15, 2),
 	product_id int,
 	foreign key (product_id) references product(id) on delete cascade
+);
+
+create table stock_order(
+	id int primary key auto_increment,
+	customer_id int,
+	foreign key (customer_id) references customer(id) on delete cascade
+);
+
+create table order_line(
+	id int primary key auto_increment,
+	product_id int,
+	quantity int,
+	-- save latest price update
+	stock_order_id int,
+	foreign key (product_id) references product(id) on delete cascade,
+	foreign key (stock_order_id) references stock_order(id) on delete cascade
+);
+
+create table payment(
+	id int primary key auto_increment,
+	stock_order_id int,
+	foreign key (stock_order_id) references stock_order(id) on delete cascade
+);
+
+create table shipment(
+	id int primary key auto_increment,
+	stock_order_id int,
+	foreign key (stock_order_id) references stock_order(id) on delete cascade
+);
+
+create table cart(
+	id int primary key auto_increment,
+	customer_id int,
+	foreign key (customer_id) references customer(id) on delete cascade
+);
+
+create table stock(
+	id int primary key auto_increment
+);
+
+create table packaging_order(
+	id int primary key auto_increment
+);
+
+create table tracking_number(
+	id int primary key auto_increment
+);
+
+create table employee(
+	id int primary key auto_increment
+);
+
+create table stock_employee(
+	id int primary key auto_increment
+);
+
+create table manager(
+	id int primary key auto_increment
 );
 
 INSERT INTO store (id, name, street, city, postal_code) VALUES (1, 'Test Store', 'Test Street', 'Test City', '123123');

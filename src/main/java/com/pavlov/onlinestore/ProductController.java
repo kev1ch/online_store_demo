@@ -2,8 +2,10 @@ package com.pavlov.onlinestore;
 
 
 import lombok.SneakyThrows;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -15,6 +17,8 @@ import java.util.List;
 @RequestMapping("/product")
 @RestController
 public class ProductController {
+    @Autowired
+    DataSource dataSource;
 
     @GetMapping("/sum/{param_1}/{param_2}")
     public String testSum(@PathVariable Long param_1, @PathVariable Long param_2) {
@@ -24,10 +28,12 @@ public class ProductController {
     @SneakyThrows
     @GetMapping("/all")
     public List<Product> getAllProducts() {
+        /*
         Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
         Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/online_store?" +
                                                                 "user=root&password=");
-        PreparedStatement statement = connection.prepareStatement("select id, name from product");
+         */
+        PreparedStatement statement = dataSource.getConnection().prepareStatement("select id, name from product");
         ResultSet result_set = statement.executeQuery();
         List<Product> result = new ArrayList<>();
 
