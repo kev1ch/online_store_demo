@@ -36,10 +36,10 @@ create table stock_order(
 
 create table order_line(
 	id int primary key auto_increment,
-	product_id int,
-	quantity int,
 	-- save latest price update
 	stock_order_id int,
+	product_id int,
+	quantity int,
 	foreign key (product_id) references product(id) on delete cascade,
 	foreign key (stock_order_id) references stock_order(id) on delete cascade
 );
@@ -60,6 +60,15 @@ create table cart(
 	id int primary key auto_increment,
 	customer_id int,
 	foreign key (customer_id) references customer(id) on delete cascade
+);
+
+create table cart_line(
+	id int primary key auto_increment,
+	cart_id int,
+	product_id int,
+	quantity int,
+	foreign key (product_id) references product(id) on delete cascade,
+	foreign key (cart_id) references cart(id) on delete cascade
 );
 
 create table stock(
@@ -95,3 +104,13 @@ INSERT INTO product (id, name, store_id) VALUES (3, 'Test Product 3', 1);
 insert into price (id, rate, product_id) values (1, 2.25, 1);
 insert into price (id, rate, product_id) values (2, 3.75, 2);
 insert into price (id, rate, product_id) values (3, 5.00, 3);
+
+insert into customer (id) values (1);
+insert into customer (id) values (2);
+
+insert into cart (id, customer_id) values (1, 1);
+insert into cart (id, customer_id) values (2, 2);
+insert into cart (id, customer_id) values (3, 1);
+
+insert into cart_line (id, cart_id, product_id, quantity) values (1, 1, 1, 1);
+insert into cart_line (id, cart_id, product_id, quantity) values (2, 1, 2, 2);
