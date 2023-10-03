@@ -1,0 +1,41 @@
+<html>
+
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+        <script>
+                   $.ajax({
+                   type    : "GET",
+                   url     : "http://localhost:8081/product/all",
+                   dataType: "json",
+                   data: {
+                       id: "id",
+                       name: "name"
+                   },
+                   success:function(data) {
+                        var table = $("#table1 tbody");
+                        $.each(data, function(idx, elem) {
+                    table.append("<tr><td>"+elem.id+"</td><td>"+elem.name+"</td></tr>");
+                });
+                   }
+                });
+        </script>
+        <title>All Products</title>
+    </head>
+
+    <body>
+        <table class="flexme" id="table1" border="1">
+            <thead>
+            <tr>
+                <th width="100">id</th>
+                <th width="100">name</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr id="test">
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
+    </body>
+
+</html>

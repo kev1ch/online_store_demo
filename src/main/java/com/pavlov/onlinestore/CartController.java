@@ -18,6 +18,10 @@ public class CartController {
     DataSource dataSource;
 
     // getAllLinesFromCart
+    public List<CartLine> getAllLinesFromCart(@RequestParam int cart_id) {
+        return null;
+    }
+
 
     // deleteLineFromCart
 

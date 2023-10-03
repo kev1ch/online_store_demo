@@ -26,13 +26,9 @@ public class ProductController {
     }
 
     @SneakyThrows
+    // @CrossOrigin(origins = "*")
     @GetMapping("/all")
     public List<Product> getAllProducts() {
-        /*
-        Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/online_store?" +
-                                                                "user=root&password=");
-         */
         PreparedStatement statement = dataSource.getConnection().prepareStatement("select id, name from product");
         ResultSet result_set = statement.executeQuery();
         List<Product> result = new ArrayList<>();
@@ -48,8 +44,14 @@ public class ProductController {
 
     }
 
+    @SneakyThrows
     @PostMapping("/")
     public String createProduct(@RequestParam String name, @RequestParam int store_id) {
+        var connection = dataSource.getConnection();
+        PreparedStatement statement = connection.prepareStatement("INSERT INTO product (name, store_id) VALUES (?, ?);");
+        statement.setString(1, name);
+        statement.setInt(2, store_id);
+        statement.execute();
         return "createProduct called";
     }
 
