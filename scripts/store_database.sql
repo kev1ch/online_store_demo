@@ -18,6 +18,9 @@ create table product(
 	id int primary key auto_increment,
 	name varchar(255),
 	store_id int,
+	aisle int,
+	bay int,
+	stock_quantity int,
 	foreign key (store_id) references store(id) on delete cascade
 );
 
@@ -97,9 +100,9 @@ create table manager(
 
 INSERT INTO store (id, name, street, city, postal_code) VALUES (1, 'Test Store', 'Test Street', 'Test City', '123123');
 
-INSERT INTO product (id, name, store_id) VALUES (1, 'Test Product 1', 1);
-INSERT INTO product (id, name, store_id) VALUES (2, 'Test Product 2', 1);
-INSERT INTO product (id, name, store_id) VALUES (3, 'Test Product 3', 1);
+INSERT INTO product (id, name, store_id, aisle, bay, stock_quantity) VALUES (1, 'Test Product 1', 1, 22, 3, 10);
+INSERT INTO product (id, name, store_id, aisle, bay, stock_quantity) VALUES (2, 'Test Product 2', 1, 10, 1, 20);
+INSERT INTO product (id, name, store_id, aisle, bay, stock_quantity) VALUES (3, 'Test Product 3', 1, 25, 5, 5);
 
 insert into price (id, rate, product_id) values (1, 2.25, 1);
 insert into price (id, rate, product_id) values (2, 3.75, 2);

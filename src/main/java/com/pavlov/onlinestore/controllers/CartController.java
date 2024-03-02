@@ -1,13 +1,12 @@
-package com.pavlov.onlinestore;
+package com.pavlov.onlinestore.controllers;
 
+import com.pavlov.onlinestore.model.CartLine;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.sql.DataSource;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.util.List;
 
 @RequestMapping("/cart")

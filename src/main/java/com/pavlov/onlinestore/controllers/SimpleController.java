@@ -1,4 +1,4 @@
-package com.pavlov.onlinestore;
+package com.pavlov.onlinestore.controllers;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;

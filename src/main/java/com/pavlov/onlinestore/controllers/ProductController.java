@@ -1,6 +1,7 @@
-package com.pavlov.onlinestore;
+package com.pavlov.onlinestore.controllers;
 
 
+import com.pavlov.onlinestore.model.Product;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +12,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @RequestMapping("/product")
@@ -29,7 +29,8 @@ public class ProductController {
     // @CrossOrigin(origins = "*")
     @GetMapping("/all")
     public List<Product> getAllProducts() {
-        PreparedStatement statement = dataSource.getConnection().prepareStatement("select id, name from product");
+        PreparedStatement statement = dataSource.getConnection().prepareStatement("select id, name, " +
+                "store_id, aisle, bay, stock_quantity from product");
         ResultSet result_set = statement.executeQuery();
         List<Product> result = new ArrayList<>();
 
@@ -37,6 +38,10 @@ public class ProductController {
             Product product = new Product();
             product.setId(result_set.getInt("id"));
             product.setName(result_set.getString("name"));
+            product.setStore_id(result_set.getInt("store_id"));
+            product.setAisle(result_set.getInt("aisle"));
+            product.setBay(result_set.getInt("bay"));
+            product.setStock_quantity(result_set.getInt("stock_quantity"));
             result.add(product);
         }
 
@@ -46,11 +51,16 @@ public class ProductController {
 
     @SneakyThrows
     @PostMapping("/")
-    public String createProduct(@RequestParam String name, @RequestParam int store_id) {
+    public String createProduct(@RequestParam String name, @RequestParam int store_id, @RequestParam int aisle,
+                                @RequestParam int bay, @RequestParam int stock_quantity) {
         var connection = dataSource.getConnection();
-        PreparedStatement statement = connection.prepareStatement("INSERT INTO product (name, store_id) VALUES (?, ?);");
+        PreparedStatement statement = connection.prepareStatement(
+                "INSERT INTO product (name, store_id, aisle, bay, stock_quantity) VALUES (?, ?, ?, ?, ?);");
         statement.setString(1, name);
         statement.setInt(2, store_id);
+        statement.setInt(3, aisle);
+        statement.setInt(4, bay);
+        statement.setInt(5, stock_quantity);
         statement.execute();
         return "createProduct called";
     }

@@ -1,4 +1,4 @@
-package com.pavlov.onlinestore;
+package com.pavlov.onlinestore.model;
 
 import lombok.Data;
 
