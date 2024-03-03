@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script>
+        function AddProduct() {
+            var name = $("#product_name").val();
+            var aisle = $("#aisle").val();
+            var bay = $("#bay").val();
+            var stock_quantity = $("#stock_quantity").val();
+            $.ajax({
+                   type    : "POST",
+                   url     : "http://localhost:8081/product/",
+                   dataType: "json",
+                   // name=Test%20Product%205&store_id=1&aisle=12&bay=13&stock_quantity=10
+                   data: {
+                       name: name,
+                       aisle: aisle,
+                       bay: bay,
+                       stock_quantity: stock_quantity,
+                       store_id: 1
+                   },
+                   function(result) {
+                        //window.location.replace("all_products_table.html");
+                        alert("function result");
+                }
+                   });
+                }
+
+
+
+    </script>
+    <meta charset="UTF-8">
+    <title>Add Product</title>
+</head>
+<body>
+<form>
+    <ul>
+        <li>
+            Name: <input id="product_name">
+        </li>
+        <li>
+            Aisle: <input id="aisle">
+        </li>
+        <li>
+            Bay: <input id="bay">
+        </li>
+        <li>
+            Quantity: <input id="stock_quantity">
+        </li>
+        <li>
+            <input type="button" value="Submit" onclick="AddProduct()">
+        </li>
+    </ul>
+</form>
+</body>
+</html>
