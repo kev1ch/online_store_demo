@@ -11,7 +11,9 @@ create table store(
 );
 
 create table customer(
-	id int primary key auto_increment
+	id int primary key auto_increment,
+	email varchar(255) not null,
+	passwrd varchar(255) not null
 );
 
 create table product(
@@ -108,8 +110,8 @@ insert into price (id, rate, product_id) values (1, 2.25, 1);
 insert into price (id, rate, product_id) values (2, 3.75, 2);
 insert into price (id, rate, product_id) values (3, 5.00, 3);
 
-insert into customer (id) values (1);
-insert into customer (id) values (2);
+INSERT INTO customer (id, email, passwrd) VALUES (1, 'test1@email.com', 'test12345');
+INSERT INTO customer (id, email, passwrd) VALUES (2, 'test2@email.com', 'test12345');
 
 insert into cart (id, customer_id) values (1, 1);
 insert into cart (id, customer_id) values (2, 2);

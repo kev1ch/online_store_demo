@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script>
+        function AddUser() {
+            var email = $("#email_field").val();
+            var password = $("#pass").val();
+
+            /*
+            $.ajax({
+                   type    : "POST",
+                   url     : "http://localhost:8081/account/register",
+                   dataType: "json",
+                   data: {
+                       email : email,
+                       password : password
+                   },
+                   function(result) {
+                        console.log("AddUser function(result) ran");
+                        alert("AddUser() result");
+                }
+                   });
+                */
+
+            $.post( "http://localhost:8081/account/register", {email: email, password: password}, function() {alert( "success" );} )
+              .done(function() {
+                alert( "second success" );
+              })
+              .fail(function() {
+                alert( "error" );
+              })
+              .always(function() {
+                alert( "finished" );
+              });
+
+        }
+    </script>
+
+    <meta charset="UTF-8">
+    <title>Register</title>
+</head>
+<body>
+    <h2> Register as a customer: </h2>
+    <form method="POST">
+        <div>
+            <label for="email_field">E-mail:</label>
+            <input type="text" id="email_field" name="email" required/>
+        </div>
+
+        <div>
+            <label for="pass">Password (8 characters minimum):</label>
+            <input type="password" id="pass" name="password" minlength="8" required/>
+        </div>
+        <input type="button" value="Submit" onclick="AddUser()"/>
+    </form>
+
+</body>
+</html>
