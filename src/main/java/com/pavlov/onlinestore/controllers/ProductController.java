@@ -50,12 +50,34 @@ public class ProductController {
     }
 
     @SneakyThrows
+    @GetMapping("/")
+    public Product getProduct(@RequestParam int id) {
+        PreparedStatement statement = dataSource.getConnection().prepareStatement("select id, name, " +
+                "store_id, aisle, bay, stock_quantity from product where id = ?");
+        statement.setInt(1, id);
+        ResultSet result_set = statement.executeQuery();
+        Product result = null;
+
+        if (result_set.next()) {
+            Product product = new Product();
+            product.setId(result_set.getInt("id"));
+            product.setName(result_set.getString("name"));
+            product.setStore_id(result_set.getInt("store_id"));
+            product.setAisle(result_set.getInt("aisle"));
+            product.setBay(result_set.getInt("bay"));
+            product.setStock_quantity(result_set.getInt("stock_quantity"));
+        }
+
+        return result;
+    }
+
+    @SneakyThrows
     @PostMapping("/")
     public String createProduct(@RequestParam String name, @RequestParam int store_id, @RequestParam int aisle,
                                 @RequestParam int bay, @RequestParam int stock_quantity) {
         var connection = dataSource.getConnection();
         PreparedStatement statement = connection.prepareStatement(
-                "INSERT INTO product (name, store_id, aisle, bay, stock_quantity) VALUES (?, ?, ?, ?, ?);");
+                "INSERT INTO product (name, store_id, aisle, bay, stock_quantity) VALUES (?, ?, ?, ?, ?)");
         statement.setString(1, name);
         statement.setInt(2, store_id);
         statement.setInt(3, aisle);

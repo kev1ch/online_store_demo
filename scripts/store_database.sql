@@ -105,6 +105,7 @@ INSERT INTO store (id, name, street, city, postal_code) VALUES (1, 'Test Store',
 INSERT INTO product (id, name, store_id, aisle, bay, stock_quantity) VALUES (1, 'Test Product 1', 1, 22, 3, 10);
 INSERT INTO product (id, name, store_id, aisle, bay, stock_quantity) VALUES (2, 'Test Product 2', 1, 10, 1, 20);
 INSERT INTO product (id, name, store_id, aisle, bay, stock_quantity) VALUES (3, 'Test Product 3', 1, 25, 5, 5);
+INSERT INTO product (id, name, store_id, aisle, bay, stock_quantity) VALUES (4, 'Test Product 4', 1, 13, 2, 1);
 
 insert into price (id, rate, product_id) values (1, 2.25, 1);
 insert into price (id, rate, product_id) values (2, 3.75, 2);
