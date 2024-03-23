@@ -3,7 +3,10 @@
     <head>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
         <script>
-                   $.ajax({
+
+                function updateTable() {
+                    $("#product_table tbody").empty();
+                    $.ajax({
                    type    : "GET",
                    url     : "http://localhost:8081/product/all",
                    dataType: "json",
@@ -15,19 +18,28 @@
                        stock_quantity: "stock_quantity"
                    },
                    success:function(data) {
-                        var table = $("#table1 tbody");
+                        var table = $("#product_table tbody");
                         $.each(data, function(idx, elem) {
                     table.append("<tr><td>"+elem.id+"</td><td>"+elem.name+"</td><td>"+elem.aisle+
-                    "</td><td>"+elem.bay+"</td><td>"+elem.stock_quantity+"</td></tr>");
-                });
-                   }
-                });
+                    "</td><td>"+elem.bay+"</td><td>"+elem.stock_quantity+"</td><td><a onclick=\"deleteProduct("+elem.id+")\">X</a></td></tr>");
+                    });
+                    }
+                    });
+                }
+
+                function deleteProduct(id) {
+                    alert("delete product " + id);
+                    // TODO insert ajax call to delete Product
+                    updateTable();
+                }
+
+                updateTable();
         </script>
         <title>All Products</title>
     </head>
 
     <body>
-        <table class="flexme" id="table1" border="1">
+        <table class="flexme" id="product_table" border="1">
             <thead>
             <tr>
                 <th width="100">id</th>
@@ -35,6 +47,7 @@
                 <th width="100">aisle</th>
                 <th width="100">bay</th>
                 <th width="100">stock</th>
+                <th width="100"></th>
             </tr>
             </thead>
             <tbody>

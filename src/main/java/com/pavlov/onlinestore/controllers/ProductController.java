@@ -68,10 +68,7 @@ public class ProductController {
     @SneakyThrows
     @DeleteMapping("/")
     public String deleteProduct(@RequestParam int id) {
-        Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/online_store?" +
-                "user=root&password=");
-        PreparedStatement statement = connection.prepareStatement("delete from product where id = ?");
+        PreparedStatement statement = dataSource.getConnection().prepareStatement("delete from product where id = ?");
         statement.setInt(1, id);
         statement.execute();
         return "deleteProduct called";
