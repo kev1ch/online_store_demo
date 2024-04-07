@@ -1,4 +1,4 @@
-package com.pavlov.onlinestore.controllers;
+package com.pavlov.onlinestore.controllers.rest;
 
 import com.pavlov.onlinestore.model.Product;
 import com.pavlov.onlinestore.model.User;

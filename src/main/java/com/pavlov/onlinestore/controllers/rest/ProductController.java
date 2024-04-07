@@ -1,4 +1,4 @@
-package com.pavlov.onlinestore.controllers;
+package com.pavlov.onlinestore.controllers.rest;
 
 
 import com.pavlov.onlinestore.model.Product;
@@ -66,6 +66,7 @@ public class ProductController {
             product.setAisle(result_set.getInt("aisle"));
             product.setBay(result_set.getInt("bay"));
             product.setStock_quantity(result_set.getInt("stock_quantity"));
+            result = product;
         }
 
         return result;
@@ -85,6 +86,25 @@ public class ProductController {
         statement.setInt(5, stock_quantity);
         statement.execute();
         return "createProduct called";
+    }
+
+    @SneakyThrows
+    @PutMapping("/")
+    public String updateProduct(@RequestParam int id, @RequestParam String name, @RequestParam int store_id,
+                                @RequestParam int aisle, @RequestParam int bay, @RequestParam int stock_quantity) {
+
+        var connection = dataSource.getConnection();
+        PreparedStatement statement = connection.prepareStatement(
+                "UPDATE product SET name = ?, store_id = ?, aisle = ?, bay = ?, stock_quantity = ? WHERE id = ?");
+
+        statement.setString(1, name);
+        statement.setInt(2, store_id);
+        statement.setInt(3, aisle);
+        statement.setInt(4, bay);
+        statement.setInt(5, stock_quantity);
+        statement.setInt(6, id);
+        statement.execute();
+        return "updateProduct called";
     }
 
     @SneakyThrows
