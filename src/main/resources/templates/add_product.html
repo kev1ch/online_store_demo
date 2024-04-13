@@ -1,14 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script>
         function AddProduct() {
+
+            var id = $("#product_id").val();
             var name = $("#product_name").val();
             var aisle = $("#aisle").val();
             var bay = $("#bay").val();
             var stock_quantity = $("#stock_quantity").val();
-            $.ajax({
+
+            if (id == -1) {
+                $.ajax({
                    type    : "POST",
                    url     : "http://localhost:8081/product/",
                    dataType: "json",
@@ -25,16 +29,21 @@
                         alert("function result");
                 }
                    });
-                }
+            } else {
+                //update product with PUT REST request
+            }
+
+            }
     </script>
     <meta charset="UTF-8">
     <title>Add Product</title>
 </head>
 <body>
     <form>
+        <input type="hidden" id="product_id" th:value="${id}">
         <ul>
             <li>
-                Name: <input value="Hardcoded Name" id="product_name">
+                Name: <input th:value="${product_name}" id="product_name">
             </li>
             <li>
                 Aisle: <input id="aisle">
