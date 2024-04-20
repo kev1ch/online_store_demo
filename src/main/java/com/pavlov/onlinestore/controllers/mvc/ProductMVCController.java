@@ -45,6 +45,9 @@ public class ProductMVCController {
 
             if (given_product != null) {
                 model.addAttribute("product_name", given_product.getName());
+                model.addAttribute("aisle", given_product.getAisle());
+                model.addAttribute("bay", given_product.getBay());
+                model.addAttribute("stock_quantity", given_product.getStock_quantity());
             }
         }
 

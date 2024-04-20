@@ -24,13 +24,41 @@
                        stock_quantity: stock_quantity,
                        store_id: 1
                    },
-                   function(result) {
+                   success: function(data) {
                         //window.location.replace("all_products_table.html");
-                        alert("function result");
-                }
+                        // alert("post function result");
+                },
+                   complete: function(data) {
+                        // alert("complete");
+                        window.location.href = "/all_products_table.html";
+                   }
                    });
             } else {
                 //update product with PUT REST request
+
+                $.ajax({
+                   type    : "PUT",
+                   url     : "http://localhost:8081/product/",
+                   dataType: "json",
+                   // name=Test%20Product%205&store_id=1&aisle=12&bay=13&stock_quantity=10
+                   data: {
+                        id: id,
+                       name: name,
+                       aisle: aisle,
+                       bay: bay,
+                       stock_quantity: stock_quantity,
+                       store_id: 1
+                   },
+                   success: function(data) {
+                        // window.location.replace("all_products_table.html");
+                        // alert("put function result");
+                   },
+                   complete: function(data) {
+                        // alert("complete");
+                        window.location.href = "/all_products_table.html";
+                   }
+                   });
+
             }
 
             }
@@ -46,18 +74,16 @@
                 Name: <input th:value="${product_name}" id="product_name">
             </li>
             <li>
-                Aisle: <input id="aisle">
+                Aisle: <input th:value="${aisle}" id="aisle">
             </li>
             <li>
-                Bay: <input id="bay">
+                Bay: <input th:value="${bay}" id="bay">
             </li>
             <li>
-                Quantity: <input id="stock_quantity">
-            </li>
-            <li>
-                <input type="button" value="Submit" onclick="AddProduct()">
+                Quantity: <input th:value="${stock_quantity}" id="stock_quantity">
             </li>
         </ul>
+        <input type="button" value="Submit" onclick="AddProduct()">
     </form>
 </body>
 </html>
