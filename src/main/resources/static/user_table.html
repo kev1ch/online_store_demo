@@ -9,16 +9,24 @@
                        dataType: "json",
                        data: {
                            id: "id",
-                           email: "email"
+                           email: "email",
+                           first_name: "first_name",
+                           last_name: "last_name",
+                           phone_number: "phone_number",
+                           address_line: "address_line",
+                           city: "city",
+                           postal_code: "postal_code",
+                           state_province: "state_province"
                        },
                        success:function(data) {
                             var table = $("#user_table tbody");
                             $.each(data, function(idx, elem) {
-                        table.append("<tr><td>"+elem.id+"</td><td>"+elem.email+"</td></tr>");
+                        table.append("<tr><td>"+elem.id+"</td><td>"+elem.email+"</td><td>"+elem.first_name+
+                        "</td><td>"+elem.last_name+"</td><td>"+elem.phone_number+"</td><td>"+elem.address_line+
+                        "</td><td>"+elem.city+"</td><td>"+elem.postal_code+"</td><td>"+elem.state_province+"</td></tr>");
                     });
                        }
                     });
-
         </script>
         <title>All Customers</title>
     </head>
@@ -29,6 +37,13 @@
             <tr>
                 <th width="100">id</th>
                 <th width="100">email</th>
+                <th width="100">first name</th>
+                <th width="100">last name</th>
+                <th width="100">phone number</th>
+                <th width="100">address line</th>
+                <th width="100">city</th>
+                <th width="100">postal code</th>
+                <th width="100">state/province</th>
             </tr>
             </thead>
             <tbody>

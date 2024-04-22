@@ -35,16 +35,19 @@
                 }
 
                 function deleteProduct(id) {
-                    alert("delete product " + id);
 
-                    $.ajax({
-                        url: "http://localhost:8081/product/" + '?' + $.param({"id": id}),
-                        type: 'DELETE',
-                        success: alert("successful delete") || $.noop
-                        // error: alert("delete error") || $.noop
-                    });
+                    if (confirm("Are you sure you want to delete product " + id + "?")) {
+                        alert("delete product " + id);
 
-                    updateTable();
+                        $.ajax({
+                            url: "http://localhost:8081/product/" + '?' + $.param({"id": id}),
+                            type: 'DELETE',
+                            success: alert("successful delete") || $.noop
+                            // error: alert("delete error") || $.noop
+                        });
+
+                        updateTable();
+                    }
                 }
 
                 updateTable();

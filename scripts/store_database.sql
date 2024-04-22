@@ -13,7 +13,14 @@ create table store(
 create table customer(
 	id int primary key auto_increment,
 	email varchar(255) not null,
-	passwrd varchar(255) not null
+	passwrd varchar(255) not null,
+	first_name varchar(255),
+	last_name varchar(255),
+	phone_number varchar(255),
+	address_line varchar(255),
+	city varchar(255),
+	postal_code varchar(255),
+	state_province varchar(255)
 );
 
 create table product(
@@ -111,8 +118,10 @@ insert into price (id, rate, product_id) values (1, 2.25, 1);
 insert into price (id, rate, product_id) values (2, 3.75, 2);
 insert into price (id, rate, product_id) values (3, 5.00, 3);
 
-INSERT INTO customer (id, email, passwrd) VALUES (1, 'test1@email.com', 'test12345');
-INSERT INTO customer (id, email, passwrd) VALUES (2, 'test2@email.com', 'test12345');
+INSERT INTO customer (id, email, passwrd, first_name, last_name, phone_number, address_line, city, postal_code, state_province) values
+(1, 'test1@email.com', 'test12345', 'John', 'Doe', '1231231234', 'Main Street 5', 'Kingston', 'A1B 2C3', 'ON');
+INSERT INTO customer (id, email, passwrd, first_name, last_name, phone_number, address_line, city, postal_code, state_province) values
+(2, 'test2@email.com', 'test12345', 'Jane', 'Doe', '3213214321', 'Main Street 5', 'Kingston', 'A1B 2C3', 'ON');
 
 insert into cart (id, customer_id) values (1, 1);
 insert into cart (id, customer_id) values (2, 2);
