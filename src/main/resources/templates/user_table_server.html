@@ -1,0 +1,38 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <title>All Customers</title>
+</head>
+
+<body>
+<table class="flexme" id="user_table" border="1">
+  <thead>
+  <tr>
+    <th width="100">#</th>
+    <th width="100">id</th>
+    <th width="100">email</th>
+    <th width="100">first name</th>
+    <th width="100">last name</th>
+    <th width="100">phone number</th>
+    <th width="100">address line</th>
+    <th width="100">city</th>
+    <th width="100">postal code</th>
+    <th width="100">state/province</th>
+  </tr>
+  </thead>
+
+  <tr th:each="user1, iStat: ${users}">
+    <td th:text="${iStat.index}" />
+    <td th:text="${user1.id}" />
+    <td th:text="${user1.email}" />
+  </tr>
+
+  <tbody>
+  <tr id="test">
+    <td></td>
+  </tr>
+  </tbody>
+</table>
+</body>
+
+</html>

@@ -1,5 +1,6 @@
 package com.pavlov.onlinestore.controllers.rest;
 
+import com.pavlov.onlinestore.dao.CustomerDAO;
 import com.pavlov.onlinestore.model.Product;
 import com.pavlov.onlinestore.model.User;
 import lombok.SneakyThrows;
@@ -16,8 +17,11 @@ import java.util.List;
 @RestController
 public class UserController {
 
-    @Autowired              // ???
-    DataSource dataSource; // ???
+    @Autowired
+    DataSource dataSource;
+
+    @Autowired
+    CustomerDAO customerDAO;
 
     @SneakyThrows
     @PostMapping("/register")
@@ -45,27 +49,7 @@ public class UserController {
     // @CrossOrigin(origins = "*")
     @GetMapping("/all")
     public List<User> getAllUsers() {
-        PreparedStatement statement = dataSource.getConnection().prepareStatement("select id, email, first_name, " +
-                "last_name, phone_number, address_line, city, postal_code, state_province from customer");
-        ResultSet result_set = statement.executeQuery();
-        List<User> result = new ArrayList<>();
-
-        while (result_set.next()) {
-            User user = new User();
-            user.setId(result_set.getInt("id"));
-            user.setEmail(result_set.getString("email"));
-            user.setFirst_name(result_set.getString("first_name"));
-            user.setLast_name(result_set.getString("last_name"));
-            user.setPhone_number(result_set.getString("phone_number"));
-            user.setAddress_line(result_set.getString("address_line"));
-            user.setCity(result_set.getString("city"));
-            user.setPostal_code(result_set.getString("postal_code"));
-            user.setState_province(result_set.getString("state_province"));
-            result.add(user);
-        }
-
-        return result;
-
+        return customerDAO.allUsers();
     }
 
 }
