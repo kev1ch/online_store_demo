@@ -1,6 +1,7 @@
 package com.pavlov.onlinestore.controllers.rest;
 
 
+import com.pavlov.onlinestore.dao.ProductDAO;
 import com.pavlov.onlinestore.model.Product;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,9 @@ public class ProductController {
     @Autowired
     DataSource dataSource;
 
+    @Autowired
+    ProductDAO productDAO;
+
     @GetMapping("/sum/{param_1}/{param_2}")
     public String testSum(@PathVariable Long param_1, @PathVariable Long param_2) {
         return "" + (param_1 + param_2);
@@ -29,24 +33,7 @@ public class ProductController {
     // @CrossOrigin(origins = "*")
     @GetMapping("/all")
     public List<Product> getAllProducts() {
-        PreparedStatement statement = dataSource.getConnection().prepareStatement("select id, name, " +
-                "store_id, aisle, bay, stock_quantity from product");
-        ResultSet result_set = statement.executeQuery();
-        List<Product> result = new ArrayList<>();
-
-        while (result_set.next()) {
-            Product product = new Product();
-            product.setId(result_set.getInt("id"));
-            product.setName(result_set.getString("name"));
-            product.setStore_id(result_set.getInt("store_id"));
-            product.setAisle(result_set.getInt("aisle"));
-            product.setBay(result_set.getInt("bay"));
-            product.setStock_quantity(result_set.getInt("stock_quantity"));
-            result.add(product);
-        }
-
-        return result;
-
+        return productDAO.allProducts();
     }
 
     @SneakyThrows

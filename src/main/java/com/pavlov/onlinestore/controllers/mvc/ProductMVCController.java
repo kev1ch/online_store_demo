@@ -1,5 +1,6 @@
 package com.pavlov.onlinestore.controllers.mvc;
 
+import com.pavlov.onlinestore.dao.ProductDAO;
 import com.pavlov.onlinestore.model.Product;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +12,24 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.sql.DataSource;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.List;
 
 @Controller
 public class ProductMVCController {
 
     @Autowired
     DataSource dataSource;
+
+    @Autowired
+    ProductDAO productDAO;
+
+    @SneakyThrows
+    @GetMapping("/all_products")
+    public String getAll(Model model) {
+        List<Product> all_products = productDAO.allProducts();
+        model.addAttribute("products", all_products);
+        return "product_table_server.html";
+    }
 
     @SneakyThrows
     @GetMapping("/add_product")

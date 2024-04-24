@@ -1,0 +1,39 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <title>All Products</title>
+</head>
+
+<body>
+<table class="flexme" id="product_table" border="1">
+  <thead>
+  <tr>
+    <th width="100">#</th>
+    <th width="100">id</th>
+    <th width="100">name</th>
+    <th width="100">store id</th>
+    <th width="100">aisle</th>
+    <th width="100">bay</th>
+    <th width="100">stock quantity</th>
+  </tr>
+  </thead>
+
+  <tr th:each="product, iStat: ${products}">
+    <td th:text="${iStat.index}" />
+    <td th:text="${product.id}" />
+    <td th:text="${product.name}" />
+    <td th:text="${product.store_id}" />
+    <td th:text="${product.aisle}" />
+    <td th:text="${product.bay}" />
+    <td th:text="${product.stock_quantity}" />
+  </tr>
+
+  <tbody>
+  <tr id="test">
+    <td></td>
+  </tr>
+  </tbody>
+</table>
+</body>
+
+</html>

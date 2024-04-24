@@ -18,13 +18,6 @@ public class CustomerDAO {
     @Autowired
     DataSource dataSource;
 
-    /*
-    @Bean
-    public CustomerDAO customerDAO1() {
-        return new CustomerDAO();
-    }
-     */
-
     @SneakyThrows
     public List<User> allUsers() {
         PreparedStatement statement = dataSource.getConnection().prepareStatement("select id, email, first_name, " +
