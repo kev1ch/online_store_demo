@@ -9,16 +9,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.sql.DataSource;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.List;
 
 @Controller
 public class ProductMVCController {
-
-    @Autowired
-    DataSource dataSource;
 
     @Autowired
     ProductDAO productDAO;

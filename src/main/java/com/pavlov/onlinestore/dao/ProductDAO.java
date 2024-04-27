@@ -1,7 +1,6 @@
 package com.pavlov.onlinestore.dao;
 
 import com.pavlov.onlinestore.model.Product;
-import com.pavlov.onlinestore.model.User;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
