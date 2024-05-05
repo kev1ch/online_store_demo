@@ -26,4 +26,10 @@ public class LoginMVCController {
         return result;
     }
 
+    @GetMapping("/logout")
+    public String logoutPage(Model model, HttpSession http_session) {
+        http_session.setAttribute("logged_in", "no");
+        return "login";
+    }
+
 }
