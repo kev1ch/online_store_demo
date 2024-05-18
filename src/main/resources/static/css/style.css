@@ -1,0 +1,63 @@
+footer {
+  text-align: center;
+  padding: 3px;
+  background-color: DarkSalmon;
+  color: white;
+}
+
+nav {
+  text-align: right;
+  padding: 3px;
+  background-color: DarkSalmon;
+  color: white;
+}
+
+nav a{  
+  padding: 20px;
+}
+
+.rest_list ul {
+	list-style-type: none;
+}
+
+.rest_list li {
+	display: block;
+	list-style-type: none;
+    margin-left:0px;
+    padding-left:0px;
+    display: inline-block;	
+}
+
+.left td {
+  text-align: left;
+}
+
+.center td {
+  text-align: center;
+}
+
+table, th, td, tr {
+	border: 1px solid black;
+    border-collapse: collapse;
+    border-color: DarkSalmon;
+}
+
+input[type=submit] {
+  transition-duration: 0.4s;
+  border-radius: 10%;
+  padding: 32px;
+}
+
+input[type=submit]:hover {
+  background-color: DarkSalmon;
+  color: white;
+  border-radius: 45%;
+}
+
+a {
+    color: Black;	
+}
+
+a:hover {
+    color: Black;
+}

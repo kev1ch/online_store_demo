@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="./css/style.css" th:href="@{/css/style.css}">
+    <meta charset="UTF-8">
+    <title>Main Design Static Page</title>
+</head>
+<body>
+    <header th:replace="~{fragments/main_header::main_header}">Online Shop</header>
+    <nav th:replace="~{fragments/main_menu::main_menu}">Main Menu</nav>
+    <section>
+        <h1>Content:</h1>
+    </section>
+    <div th:fragment="main_menu">
+      <span><a th:href="@{/}">Home</a></span>
+      <span><a th:href="@{/all_products}">Product List</a></span>
+    </div>
+    <!--div th:fragment="side_column">Side Column</div-->
+    <div th:fragment="stub">Main Content</div>
+    <footer th:replace="~{fragments/footer::footer}">&copy;2024 DP</footer>
+</body>
+</html>
