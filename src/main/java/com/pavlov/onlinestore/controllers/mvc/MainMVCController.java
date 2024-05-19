@@ -20,13 +20,13 @@ public class MainMVCController {
     public String mainPage(Model model) {
         List<Product> all_products = productDAO.allProducts();
         model.addAttribute("products", all_products);
-        return "products_for_sale";
+        return "products_for_sale.html";
     }
 
     @GetMapping("/test_design")
     public String mainDesign() {
 
-        return "main_design";
+        return "main_design.html";
     }
 
 }

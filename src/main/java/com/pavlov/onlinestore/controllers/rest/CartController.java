@@ -107,7 +107,7 @@ public class CartController {
 
     @SneakyThrows
     @GetMapping("/temp_cart_lines_quantity")
-    public Integer getLinesQuantity(HttpSession http_session) {
+    public Map<String, String> getLinesQuantity(HttpSession http_session) {
 
         int result = 0;
         Object cart_obj = http_session.getAttribute(HTTP_SESSION_CART_KEY);
@@ -120,7 +120,10 @@ public class CartController {
             }
         }
 
-        return result;
+        Map<String, String> map_result = new HashMap<>();
+        map_result.put("quantity", String.valueOf(result));
+
+        return map_result;
     }
 
     @SneakyThrows

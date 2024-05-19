@@ -7,12 +7,46 @@
     <title>Main Design Static Page</title>
 
     <script>
+        function updateLineQuantity() {
+
+            $.ajax({
+                   type    : "GET",
+                   url     : "http://localhost:8081/cart/temp_cart_lines_quantity",
+                   dataType: 'json',
+                   data    : {
+                        quantity: "quantity"
+                   },
+                   success:function(data) {
+                        $('#line_quantity').text(data.quantity);
+                   }
+            });
+        }
+
         function numChange(obj) {
             var quantity = obj.value;
             var product_id = obj.closest("form").elements["product_id"].value;
+            // http://localhost:8081/cart/temp_cart?product_id=1&quantity=2
+
+            $.ajax({
+                   type    : "POST",
+                   url     : "http://localhost:8081/cart/temp_cart",
+                   dataType: "json",
+                   data: {
+                       product_id: product_id,
+                       quantity: quantity
+                   },
+                   success: function(data) {
+                        //window.location.replace("all_products_table.html");
+                        // alert("post function result");
+                },
+                   complete: function(data) {
+                        // alert("cart update complete");
+                        updateLineQuantity();
+                   }
+                   });
 
             // alert(obj.value);
-            alert(obj.closest("form").elements["product_id"].value);
+            //alert(obj.closest("form").elements["product_id"].value);
         }
     </script>
 
@@ -20,6 +54,7 @@
 <body>
 <header th:replace="~{fragments/main_header::main_header}">Online Shop</header>
 <nav th:replace="~{fragments/main_menu::main_menu}">Main Menu</nav>
+<nav>Cart (<span id="line_quantity">0</span>)</nav>
 <section>
     <h1>Content:</h1>
     <table class="flexme" id="product_table" border="1">
@@ -39,7 +74,7 @@
             <td>
                 <form>
                     <input type="hidden" th:value="${product.id}" id="product_id">
-                    <input type="number" min="0" max="100" onchange="numChange(this)">
+                    <input type="number" value="0" min="0" max="100" onchange="numChange(this)">
                 </form>
             </td>
         </tr>
