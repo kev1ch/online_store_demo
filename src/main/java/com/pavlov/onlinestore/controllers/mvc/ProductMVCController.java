@@ -26,6 +26,19 @@ public class ProductMVCController {
     }
 
     @SneakyThrows
+    @GetMapping("/product_info")
+    public String getInfo(@RequestParam int id, Model model) {
+
+        Product given_product = productDAO.getProductById(id);
+        if (given_product != null) {
+            model.addAttribute("product_name", given_product.getName());
+            model.addAttribute("stock_quantity", given_product.getStock_quantity());
+        }
+
+        return "product_info.html";
+    }
+
+    @SneakyThrows
     @GetMapping("/add_product")
     public String add(@RequestParam(name = "product_id", required = false, defaultValue = "-1") int id, Model model) {
 

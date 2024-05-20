@@ -69,7 +69,8 @@
         <tr th:each="product, iStat: ${products}">
             <td th:text="${iStat.index}" />
             <td th:text="${product.id}" />
-            <td th:text="${product.name}" />
+            <td th:inline="text"> <a th:href="@{~/product_info?id={id}(id=${product.id})}"/> [[${product.name}]] </td>
+
             <td>
                 <form>
                     <input type="hidden" th:value="${product.id}" id="product_id">
