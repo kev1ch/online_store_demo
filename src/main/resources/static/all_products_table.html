@@ -8,7 +8,7 @@
                     $("#product_table tbody").empty();
                     $.ajax({
                    type    : "GET",
-                   url     : "http://localhost:8081/product/all",
+                   url     : "/product/all",
                    dataType: "json",
                    data: {
                        id: "id",
@@ -40,7 +40,7 @@
                         alert("delete product " + id);
 
                         $.ajax({
-                            url: "http://localhost:8081/product/" + '?' + $.param({"id": id}),
+                            url: "/product/" + '?' + $.param({"id": id}),
                             type: 'DELETE',
                             success: alert("successful delete") || $.noop
                             // error: alert("delete error") || $.noop

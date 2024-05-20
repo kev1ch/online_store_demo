@@ -11,7 +11,7 @@
 
             $.ajax({
                    type    : "GET",
-                   url     : "http://localhost:8081/cart/temp_cart_lines_quantity",
+                   url     : "/cart/temp_cart_lines_quantity",
                    dataType: 'json',
                    data    : {
                         quantity: "quantity"
@@ -25,11 +25,10 @@
         function numChange(obj) {
             var quantity = obj.value;
             var product_id = obj.closest("form").elements["product_id"].value;
-            // http://localhost:8081/cart/temp_cart?product_id=1&quantity=2
 
             $.ajax({
                    type    : "POST",
-                   url     : "http://localhost:8081/cart/temp_cart",
+                   url     : "/cart/temp_cart",
                    dataType: "json",
                    data: {
                        product_id: product_id,

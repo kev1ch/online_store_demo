@@ -11,7 +11,7 @@
             /*
             $.ajax({
                    type    : "POST",
-                   url     : "http://localhost:8081/account/register",
+                   url     : "/account/register",
                    dataType: "json",
                    data: {
                        email : email,
@@ -24,7 +24,7 @@
                    });
                 */
 
-            $.post( "http://localhost:8081/account/register", {email: email, password: password}, function() {alert( "success" );} )
+            $.post( "/account/register", {email: email, password: password}, function() {alert( "success" );} )
               .done(function() {
                 alert( "second success" );
               })

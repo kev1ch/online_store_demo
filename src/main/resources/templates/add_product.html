@@ -14,7 +14,7 @@
             if (id == -1) {
                 $.ajax({
                    type    : "POST",
-                   url     : "http://localhost:8081/product/",
+                   url     : "/product/",
                    dataType: "json",
                    // name=Test%20Product%205&store_id=1&aisle=12&bay=13&stock_quantity=10
                    data: {
@@ -38,7 +38,7 @@
 
                 $.ajax({
                    type    : "PUT",
-                   url     : "http://localhost:8081/product/",
+                   url     : "/product/",
                    dataType: "json",
                    // name=Test%20Product%205&store_id=1&aisle=12&bay=13&stock_quantity=10
                    data: {
