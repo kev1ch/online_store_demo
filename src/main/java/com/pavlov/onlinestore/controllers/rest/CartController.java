@@ -22,6 +22,7 @@ import java.util.Map;
 public class CartController {
 
     private static final String HTTP_SESSION_CART_KEY = "session_cart";
+    private static final String INCREMENT_ONE = "-1";
 
     @Autowired
     ProductDAO productDAO;
@@ -61,7 +62,8 @@ public class CartController {
 
     @SneakyThrows
     @PostMapping("/temp_cart")
-    public Integer addToTempCart(@RequestParam int product_id, @RequestParam int quantity, HttpSession http_session) {
+    public Integer addToTempCart(@RequestParam int product_id, @RequestParam(defaultValue = INCREMENT_ONE) int quantity,
+                                 HttpSession http_session) {
 
         Object cart_obj = http_session.getAttribute(HTTP_SESSION_CART_KEY);
         Map<Integer, Integer> cart;
@@ -69,6 +71,14 @@ public class CartController {
             cart = new HashMap<>();
         } else {
             cart = (Map<Integer, Integer>)cart_obj;
+        }
+
+        if (String.valueOf(quantity).equals(INCREMENT_ONE)) {
+            if (cart.containsKey(product_id)) {
+                quantity = cart.get(product_id) + 1;
+            } else {
+                quantity = 1;
+            }
         }
 
         cart.put(product_id, quantity);

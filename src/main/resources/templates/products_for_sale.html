@@ -2,30 +2,24 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/updateCartLine.js"></script>
     <link rel="stylesheet" href="./css/style.css" th:href="@{/css/style.css}">
     <meta charset="UTF-8">
     <title>Main Design Static Page</title>
 
     <script>
-        function updateLineQuantity() {
-
-            $.ajax({
-                   type    : "GET",
-                   url     : "/cart/temp_cart_lines_quantity",
-                   dataType: 'json',
-                   data    : {
-                        quantity: "quantity"
-                   },
-                   success:function(data) {
-                        $('#line_quantity').text(data.quantity);
-                   }
-            });
-        }
 
         function numChange(obj) {
             var quantity = obj.value;
             var product_id = obj.closest("form").elements["product_id"].value;
 
+            updateMainMenuValue(quantity, product_id);
+
+            // alert(obj.value);
+            //alert(obj.closest("form").elements["product_id"].value);
+        }
+
+        function updateMainMenuValue(quantity, product_id) {
             $.ajax({
                    type    : "POST",
                    url     : "/cart/temp_cart",
@@ -42,18 +36,16 @@
                         // alert("cart update complete");
                         updateLineQuantity();
                    }
-                   });
-
-            // alert(obj.value);
-            //alert(obj.closest("form").elements["product_id"].value);
+            });
         }
+        //TODO call updateLineQuantity() on page view
     </script>
 
 </head>
 <body>
 <header th:replace="~{fragments/main_header::main_header}">Online Shop</header>
 <nav th:replace="~{fragments/main_menu::main_menu}">Main Menu</nav>
-<nav>Cart (<span id="line_quantity">0</span>)</nav>
+
 <section>
     <h1>Content:</h1>
     <table class="flexme" id="product_table" border="1">
@@ -86,6 +78,7 @@
         </tbody>
     </table>
 </section>
+
 <footer th:replace="~{fragments/footer::footer}">&copy;2024 DP</footer>
 </body>
 </html>

@@ -31,6 +31,7 @@ public class ProductMVCController {
 
         Product given_product = productDAO.getProductById(id);
         if (given_product != null) {
+            model.addAttribute("product_id", given_product.getId());
             model.addAttribute("product_name", given_product.getName());
             model.addAttribute("stock_quantity", given_product.getStock_quantity());
         }
