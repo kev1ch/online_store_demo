@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
+import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -58,6 +59,21 @@ public class ProductDAO {
         }
 
         return given_product;
+    }
+
+    @SneakyThrows
+    public BigDecimal getRateByProductId(int id) {
+        BigDecimal result = new BigDecimal(0);
+        PreparedStatement statement = dataSource.getConnection().prepareStatement("select rate from price where " +
+                "product_id = ?");
+        statement.setInt(1, id);
+        ResultSet result_set = statement.executeQuery();
+
+        if (result_set.next()) {
+            result = result_set.getBigDecimal("rate");
+        }
+
+        return result;
     }
 
 }

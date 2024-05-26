@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <script type="text/javascript" src="/js/updateCartLine.js"></script>
+  <link rel="stylesheet" href="./css/style.css" th:href="@{/css/style.css}">
+  <meta charset="UTF-8">
+  <title>Cart</title>
+
+  <script>
+
+        function numChange(obj) {
+            var quantity = obj.value;
+            var product_id = obj.closest("form").elements["product_id"].value;
+
+            updateMainMenuValue(quantity, product_id);
+
+            // alert(obj.value);
+            //alert(obj.closest("form").elements["product_id"].value);
+        }
+
+        function updateMainMenuValue(quantity, product_id) {
+            $.ajax({
+                   type    : "POST",
+                   url     : "/cart/temp_cart",
+                   dataType: "json",
+                   data: {
+                       product_id: product_id,
+                       quantity: quantity
+                   },
+                   success: function(data) {
+                        //window.location.replace("all_products_table.html");
+                        // alert("post function result");
+                },
+                   complete: function(data) {
+                        // alert("cart update complete");
+                        updateLineQuantity();
+                   }
+            });
+        }
+        //TODO call updateLineQuantity() on page view
+    </script>
+
+</head>
+<body>
+<header th:replace="~{fragments/main_header::main_header}">Online Shop</header>
+<nav th:replace="~{fragments/main_menu::main_menu}">Main Menu</nav>
+
+<section>
+  <h1>Cart Contents:</h1>
+  <table class="flexme" id="product_table" border="1">
+    <thead>
+    <tr>
+      <th width="100">#</th>
+      <th width="100">id</th>
+      <th width="100">name</th>
+      <th width="100"></th>
+    </tr>
+    </thead>
+
+  </table>
+</section>
+
+<footer th:replace="~{fragments/footer::footer}">&copy;2024 DP</footer>
+</body>
+</html>

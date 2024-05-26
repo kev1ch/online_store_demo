@@ -99,13 +99,20 @@ public class CartController {
             for (Integer product_id : cart.keySet()) {
                 if (cart.get(product_id) > 0) {
                     CartLine cart_line = new CartLine();
-                    cart_line.setQuantity(cart.get(product_id));
+
+                    int quantity = cart.get(product_id);
+                    cart_line.setQuantity(quantity);
                     cart_line.setProduct_id(product_id);
                     cart_line.setCart_id(0);
 
                     Product product = productDAO.getProductById(product_id);
                     cart_line.setProduct_name(product.getName());
-                    cart_line.setPrice(new BigDecimal(0)); //TODO set price
+
+                    BigDecimal rate = productDAO.getRateByProductId(product_id);
+                    cart_line.setRate(rate);
+
+                    BigDecimal price = rate.multiply(new BigDecimal(quantity));
+                    cart_line.setPrice(price);
 
                     result.add(cart_line);
                 }

@@ -10,6 +10,7 @@ public class CartLine {
     private int quantity;
     private int cart_id;
     private String product_name;
+    private BigDecimal rate;
     private BigDecimal price;
 
 

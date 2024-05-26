@@ -38,7 +38,7 @@ create table price(
 	rate decimal(15, 2),
 	product_id int,
 	foreign key (product_id) references product(id) on delete cascade
-);
+); -- since one product can have multiple prices (by condition), the relation between product-price is (1:N)
 
 create table stock_order(
 	id int primary key auto_increment,
@@ -117,6 +117,7 @@ INSERT INTO product (id, name, store_id, aisle, bay, stock_quantity) VALUES (4, 
 insert into price (id, rate, product_id) values (1, 2.25, 1);
 insert into price (id, rate, product_id) values (2, 3.75, 2);
 insert into price (id, rate, product_id) values (3, 5.00, 3);
+insert into price (id, rate, product_id) values (4, 4.95, 4);
 
 INSERT INTO customer (id, email, passwrd, first_name, last_name, phone_number, address_line, city, postal_code, state_province) values
 (1, 'test1@email.com', 'test12345', 'John', 'Doe', '1231231234', 'Main Street 5', 'Kingston', 'A1B 2C3', 'ON');
