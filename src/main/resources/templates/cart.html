@@ -9,36 +9,55 @@
 
   <script>
 
-        function numChange(obj) {
-            var quantity = obj.value;
-            var product_id = obj.closest("form").elements["product_id"].value;
+const successfulDelete = () => {
+    alert("successful delete");
+    updateTable();
+    updateLineQuantity();
+}
 
-            updateMainMenuValue(quantity, product_id);
+const deleteLine = (product_id) => {
 
-            // alert(obj.value);
-            //alert(obj.closest("form").elements["product_id"].value);
-        }
+                        if (confirm("Are you sure you want to delete product " + product_id + " from your cart?")) {
 
-        function updateMainMenuValue(quantity, product_id) {
-            $.ajax({
-                   type    : "POST",
+                        $.ajax({
+                            url: "/cart/temp_cart?product_id="+product_id,
+                            type: 'DELETE',
+                            success: successfulDelete() || $.noop
+                            // error: alert("delete error") || $.noop
+                        });
+                        console.log("we are here");
+                    }
+
+}
+
+function updateTable() {
+                    $.ajax({
+                   type    : "GET",
                    url     : "/cart/temp_cart",
                    dataType: "json",
                    data: {
-                       product_id: product_id,
-                       quantity: quantity
+                       product_id: "product_id",
+                       quantity: "quantity",
+                       cart_id: "cart_id",
+                       product_name: "product_name",
+                       rate: "rate",
+                       price: "price"
                    },
-                   success: function(data) {
-                        //window.location.replace("all_products_table.html");
-                        // alert("post function result");
-                },
-                   complete: function(data) {
-                        // alert("cart update complete");
-                        updateLineQuantity();
-                   }
-            });
-        }
-        //TODO call updateLineQuantity() on page view
+                   success:function(data) {
+                        $("#cart_table tbody").empty();
+                        var table = $("#cart_table tbody");
+                        $.each(data, function(idx, elem) {
+                    table.append("<tr><td>"+elem.product_id+"</td><td>"+elem.product_name+"</td><td>"+elem.quantity+
+                        "</td><td>"+elem.rate+"</td><td>"+elem.price+"</td><td><button onclick='deleteLine("+elem.product_id+
+                        ")'>Delete</button></td></tr>");
+
+                    });
+                    }
+                    });
+                }
+
+        updateLineQuantity();
+        updateTable();
     </script>
 
 </head>
@@ -48,17 +67,24 @@
 
 <section>
   <h1>Cart Contents:</h1>
-  <table class="flexme" id="product_table" border="1">
+  <table class="flexme" id="cart_table" border="1">
     <thead>
     <tr>
-      <th width="100">#</th>
-      <th width="100">id</th>
-      <th width="100">name</th>
-      <th width="100"></th>
+      <th width="100">product_id</th>
+      <th width="100">product_name</th>
+      <th width="100">quantity</th>
+      <th width="100">rate</th>
+      <th width="100">price</th>
+      <th width="100">Delete</th>
     </tr>
     </thead>
-
+    <tbody>
+    <tr id="test">
+      <td>empty table</td>
+    </tr>
+    </tbody>
   </table>
+  <button>Check Out</button>
 </section>
 
 <footer th:replace="~{fragments/footer::footer}">&copy;2024 DP</footer>

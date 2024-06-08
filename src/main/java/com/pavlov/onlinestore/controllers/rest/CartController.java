@@ -96,30 +96,49 @@ public class CartController {
 
         if (cart_obj != null) {
             Map<Integer, Integer> cart = (Map<Integer, Integer>)cart_obj;
-            for (Integer product_id : cart.keySet()) {
-                if (cart.get(product_id) > 0) {
-                    CartLine cart_line = new CartLine();
+            synchronized (cart) {
+                if (cart.keySet() != null) {
+                    for (Integer product_id : cart.keySet()) {
+                        if (cart.get(product_id) > 0) {
+                            CartLine cart_line = new CartLine();
 
-                    int quantity = cart.get(product_id);
-                    cart_line.setQuantity(quantity);
-                    cart_line.setProduct_id(product_id);
-                    cart_line.setCart_id(0);
+                            int quantity = cart.get(product_id);
+                            cart_line.setQuantity(quantity);
+                            cart_line.setProduct_id(product_id);
+                            cart_line.setCart_id(0);
 
-                    Product product = productDAO.getProductById(product_id);
-                    cart_line.setProduct_name(product.getName());
+                            Product product = productDAO.getProductById(product_id);
+                            cart_line.setProduct_name(product.getName());
 
-                    BigDecimal rate = productDAO.getRateByProductId(product_id);
-                    cart_line.setRate(rate);
+                            BigDecimal rate = productDAO.getRateByProductId(product_id);
+                            cart_line.setRate(rate);
 
-                    BigDecimal price = rate.multiply(new BigDecimal(quantity));
-                    cart_line.setPrice(price);
+                            BigDecimal price = rate.multiply(new BigDecimal(quantity));
+                            cart_line.setPrice(price);
 
-                    result.add(cart_line);
+                            result.add(cart_line);
+                        }
+                    }
                 }
             }
         }
 
         return result;
+    }
+
+    @SneakyThrows
+    @DeleteMapping("/temp_cart")
+    public Boolean deleteFromTempCart(@RequestParam int product_id, HttpSession http_session) {
+        Object cart_obj = http_session.getAttribute(HTTP_SESSION_CART_KEY);
+        Map<Integer, Integer> cart;
+        if (cart_obj == null) {
+            cart = new HashMap<>();
+        } else {
+            cart = (Map<Integer, Integer>)cart_obj;
+        }
+        cart.remove(product_id);
+        http_session.setAttribute(HTTP_SESSION_CART_KEY, cart);
+        return true;
     }
 
     @SneakyThrows

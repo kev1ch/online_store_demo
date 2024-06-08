@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.math.BigDecimal;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -20,20 +21,25 @@ public class ProductDAO {
 
     @SneakyThrows
     public List<Product> allProducts() {
-        PreparedStatement statement = dataSource.getConnection().prepareStatement("select id, name, " +
-                "store_id, aisle, bay, stock_quantity from product");
-        ResultSet result_set = statement.executeQuery();
-        List<Product> result = new ArrayList<>();
 
-        while (result_set.next()) {
-            Product product = new Product();
-            product.setId(result_set.getInt("id"));
-            product.setName(result_set.getString("name"));
-            product.setStore_id(result_set.getInt("store_id"));
-            product.setAisle(result_set.getInt("aisle"));
-            product.setBay(result_set.getInt("bay"));
-            product.setStock_quantity(result_set.getInt("stock_quantity"));
-            result.add(product);
+        List<Product> result = new ArrayList<>();
+        try (Connection connection = dataSource.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("select id, name, " +
+                    "store_id, aisle, bay, stock_quantity from product");
+            ResultSet result_set = statement.executeQuery();
+
+            while (result_set.next()) {
+                Product product = new Product();
+                product.setId(result_set.getInt("id"));
+                product.setName(result_set.getString("name"));
+                product.setStore_id(result_set.getInt("store_id"));
+                product.setAisle(result_set.getInt("aisle"));
+                product.setBay(result_set.getInt("bay"));
+                product.setStock_quantity(result_set.getInt("stock_quantity"));
+                result.add(product);
+            }
+
+            statement.close();
         }
 
         return result;
@@ -41,21 +47,26 @@ public class ProductDAO {
 
     @SneakyThrows
     public Product getProductById(int id) {
-        PreparedStatement statement = dataSource.getConnection().prepareStatement("select id, name, " +
-                "store_id, aisle, bay, stock_quantity from product where id = ?");
-        statement.setInt(1, id);
-        ResultSet result_set = statement.executeQuery();
         Product given_product = null;
 
-        if (result_set.next()) {
-            Product product = new Product();
-            product.setId(result_set.getInt("id"));
-            product.setName(result_set.getString("name"));
-            product.setStore_id(result_set.getInt("store_id"));
-            product.setAisle(result_set.getInt("aisle"));
-            product.setBay(result_set.getInt("bay"));
-            product.setStock_quantity(result_set.getInt("stock_quantity"));
-            given_product = product;
+        try (Connection connection = dataSource.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("select id, name, " +
+                    "store_id, aisle, bay, stock_quantity from product where id = ?");
+            statement.setInt(1, id);
+            ResultSet result_set = statement.executeQuery();
+
+            if (result_set.next()) {
+                Product product = new Product();
+                product.setId(result_set.getInt("id"));
+                product.setName(result_set.getString("name"));
+                product.setStore_id(result_set.getInt("store_id"));
+                product.setAisle(result_set.getInt("aisle"));
+                product.setBay(result_set.getInt("bay"));
+                product.setStock_quantity(result_set.getInt("stock_quantity"));
+                given_product = product;
+            }
+
+            statement.close();
         }
 
         return given_product;
@@ -63,14 +74,19 @@ public class ProductDAO {
 
     @SneakyThrows
     public BigDecimal getRateByProductId(int id) {
-        BigDecimal result = new BigDecimal(0);
-        PreparedStatement statement = dataSource.getConnection().prepareStatement("select rate from price where " +
-                "product_id = ?");
-        statement.setInt(1, id);
-        ResultSet result_set = statement.executeQuery();
 
-        if (result_set.next()) {
-            result = result_set.getBigDecimal("rate");
+        BigDecimal result = new BigDecimal(0);
+        try (Connection connection = dataSource.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("select rate from price where " +
+                    "product_id = ?");
+            statement.setInt(1, id);
+            ResultSet result_set = statement.executeQuery();
+
+            if (result_set.next()) {
+                result = result_set.getBigDecimal("rate");
+            }
+
+            statement.close();
         }
 
         return result;
