@@ -4,6 +4,7 @@ import com.pavlov.onlinestore.dao.ProductDAO;
 import com.pavlov.onlinestore.model.Product;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +28,7 @@ public class ProductMVCController {
 
     @SneakyThrows
     @GetMapping("/product_info")
+    @Secured({"USER", "ADMIN"})
     public String getInfo(@RequestParam int id, Model model) {
 
         Product given_product = productDAO.getProductById(id);
@@ -41,6 +43,7 @@ public class ProductMVCController {
 
     @SneakyThrows
     @GetMapping("/add_product")
+    @Secured({"ADMIN"})
     public String add(@RequestParam(name = "product_id", required = false, defaultValue = "-1") int id, Model model) {
 
         boolean product_found = false;

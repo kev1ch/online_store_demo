@@ -1,4 +1,4 @@
-package com.pavlov.onlinestore;
+package com.pavlov.onlinestore.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.jdbc.DataSourceBuilder;

@@ -4,15 +4,20 @@ package com.pavlov.onlinestore.controllers.rest;
 import com.pavlov.onlinestore.dao.ProductDAO;
 import com.pavlov.onlinestore.model.Product;
 import lombok.SneakyThrows;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.sql.DataSource;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 @RequestMapping("/product")
@@ -101,6 +106,20 @@ public class ProductController {
         statement.setInt(1, id);
         statement.execute();
         return "deleteProduct called";
+    }
+
+    @SneakyThrows
+    @GetMapping("/product_display")
+    public String displayProduct() {
+        String result = "";
+        File file = new File("C:\\projects\\online_store_demo\\src\\main\\resources\\static\\img\\pic_meal4.png");
+
+        try (InputStream is = new FileInputStream(file)) {
+            byte[] bytes = IOUtils.toByteArray(is);
+            result = Base64.getEncoder().encodeToString(bytes);
+        }
+
+        return result;
     }
 
 }

@@ -17,7 +17,8 @@ public class TestMVCController {
 
         String result = "login";
 
-        if (is_logged_in != null && is_logged_in.equals("yes")) {
+        //if (is_logged_in != null && is_logged_in.equals("yes")) {
+        if (true) {
             result = "test";
         }
 
