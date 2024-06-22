@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <script type="text/javascript" src="/js/updateCartLine.js"></script>
+  <link rel="stylesheet" href="./css/style.css" th:href="@{/css/style.css}">
+  <meta charset="UTF-8">
+  <title>Image Upload</title>
+
+</head>
+<body>
+<header th:replace="~{fragments/main_header::main_header}">Online Shop</header>
+<nav th:replace="~{fragments/main_menu::main_menu}">Main Menu</nav>
+<section>
+  <h1>Image Upload:</h1>
+  <form method="POST" action="/img_upload_receiver" enctype="multipart/form-data">
+    <input type="file" name="img_file">
+    <input type="submit" value="Upload">
+  </form>
+</section>
+<footer th:replace="~{fragments/footer::footer}">&copy;2024 DP</footer>
+</body>
+</html>

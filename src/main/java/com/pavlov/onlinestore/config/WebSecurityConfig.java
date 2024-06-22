@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -18,18 +19,26 @@ public class WebSecurityConfig {
     @Bean
     @SneakyThrows
     public SecurityFilterChain securityFilterChain(HttpSecurity http) {
+        /*
         http
                 .authorizeHttpRequests((requests) -> requests
                         //.requestMatchers("/").permitAll()
                         .requestMatchers("**", "*", "/test").permitAll()  //TODO set pages that require authorization
                         .anyRequest().authenticated()
                 )
+
                 .formLogin((form) -> form
                         .loginPage("/login")
                         .permitAll()
                 )
-                .logout((logout) -> logout.permitAll());
+                .logout((logout) -> logout.permitAll())
+                .authorizeRequests(authorizeRequests -> authorizeRequests.anyRequest()
+                        .permitAll())
+                .csrf(AbstractHttpConfigurer::disable);
+         */
 
+        http.cors().and()
+                .csrf().disable();
         return http.build();
     }
 

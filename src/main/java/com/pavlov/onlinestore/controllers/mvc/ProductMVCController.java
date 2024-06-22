@@ -8,7 +8,9 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -68,6 +70,22 @@ public class ProductMVCController {
         }
 
         return "add_product";
+    }
+
+    @SneakyThrows
+    @GetMapping("/upload_image")
+    public String uploadImage(Model model) {
+
+        return "img_upload_form";
+    }
+
+    @SneakyThrows
+    @PostMapping("/img_upload_receiver")
+    public String imgUploadReceiver(@RequestParam("file")MultipartFile img_file) {
+        String img_name = img_file.getName();
+        long img_size = img_file.getSize();
+        System.out.printf("%s %d\n", img_name, img_size);
+        return "img_upload_result";
     }
 
 }
