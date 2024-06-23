@@ -92,4 +92,42 @@ public class ProductDAO {
         return result;
     }
 
+    @SneakyThrows
+    public String getImage(int product_id) {
+        String result = "";
+        try (Connection connection = dataSource.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("select content from product_img where " +
+                    "product_id = ?");
+            statement.setInt(1, product_id);
+            ResultSet result_set = statement.executeQuery();
+
+            if (result_set.next()) {
+                result = result_set.getString("content");
+            }
+
+            statement.close();
+        }
+        return result;
+    }
+
+    @SneakyThrows
+    public int saveImage(int product_id, String content) {
+        int result = -1;
+        try (Connection connection = dataSource.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("insert into product_img (content, product_id) " +
+                    "values (?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
+            statement.setString(1, content);
+            statement.setInt(2, product_id);
+            int rows_affected = statement.executeUpdate();
+            if (rows_affected > 0) {
+                ResultSet generated_keys = statement.getGeneratedKeys();
+                if (generated_keys.next()) {
+                    result = generated_keys.getInt(1);
+                }
+            }
+            statement.close();
+        }
+        return result;
+    }
+
 }

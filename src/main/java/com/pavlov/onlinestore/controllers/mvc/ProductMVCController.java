@@ -3,6 +3,7 @@ package com.pavlov.onlinestore.controllers.mvc;
 import com.pavlov.onlinestore.dao.ProductDAO;
 import com.pavlov.onlinestore.model.Product;
 import lombok.SneakyThrows;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -12,6 +13,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.util.Base64;
 import java.util.List;
 
 @Controller
@@ -81,10 +85,13 @@ public class ProductMVCController {
 
     @SneakyThrows
     @PostMapping("/img_upload_receiver")
-    public String imgUploadReceiver(@RequestParam("file")MultipartFile img_file) {
-        String img_name = img_file.getName();
-        long img_size = img_file.getSize();
-        System.out.printf("%s %d\n", img_name, img_size);
+    public String imgUploadReceiver(@RequestParam("img_file")MultipartFile img_file, @RequestParam("product_id")int product_id) {
+        String result = "";
+        try (InputStream is = img_file.getInputStream()) {
+            byte[] bytes = IOUtils.toByteArray(is);
+            result = Base64.getEncoder().encodeToString(bytes);
+            productDAO.saveImage(product_id, result);
+        }
         return "img_upload_result";
     }
 

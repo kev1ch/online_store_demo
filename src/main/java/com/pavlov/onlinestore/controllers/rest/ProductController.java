@@ -12,11 +12,8 @@ import javax.sql.DataSource;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 
@@ -110,15 +107,9 @@ public class ProductController {
 
     @SneakyThrows
     @GetMapping("/product_display")
-    public String displayProduct() {
+    public String displayProductById(@RequestParam int id) {
         String result = "";
-        File file = new File("C:\\projects\\online_store_demo\\src\\main\\resources\\static\\img\\pic_meal4.png");
-
-        try (InputStream is = new FileInputStream(file)) {
-            byte[] bytes = IOUtils.toByteArray(is);
-            result = Base64.getEncoder().encodeToString(bytes);
-        }
-
+        result = productDAO.getImage(id);
         return result;
     }
 

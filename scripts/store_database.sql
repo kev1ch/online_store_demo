@@ -33,6 +33,13 @@ create table product(
 	foreign key (store_id) references store(id) on delete cascade
 );
 
+create table product_img(
+	id int primary key auto_increment,
+	content text,
+	product_id int,
+	foreign key (product_id) references product(id) on delete cascade
+);
+
 create table price(
 	id int primary key auto_increment,
 	rate decimal(15, 2),
