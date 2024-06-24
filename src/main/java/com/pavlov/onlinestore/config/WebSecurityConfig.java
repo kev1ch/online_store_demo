@@ -36,7 +36,7 @@ public class WebSecurityConfig {
                         .permitAll())
                 .csrf(AbstractHttpConfigurer::disable);
          */
-
+        // since requests are for local resources only, cors() should not be necessary, but it gives 403 without it
         http.cors().and()
                 .csrf().disable();
         return http.build();

@@ -93,12 +93,12 @@ public class ProductDAO {
     }
 
     @SneakyThrows
-    public String getImage(int product_id) {
+    public String getImage(int img_id) {
         String result = "";
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement("select content from product_img where " +
-                    "product_id = ?");
-            statement.setInt(1, product_id);
+                    "id = ?");
+            statement.setInt(1, img_id);
             ResultSet result_set = statement.executeQuery();
 
             if (result_set.next()) {
@@ -127,6 +127,27 @@ public class ProductDAO {
             }
             statement.close();
         }
+        return result;
+    }
+
+    @SneakyThrows
+    public List<Integer> getAllProductImages(int product_id) {
+        List<Integer> result = new ArrayList<>();
+
+        try (Connection connection = dataSource.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("select id from product_img where " +
+                    "product_id = ?");
+            statement.setInt(1, product_id);
+            ResultSet result_set = statement.executeQuery();
+
+            while (result_set.next()) {
+                int img_id = result_set.getInt(1);
+                result.add(img_id);
+            }
+
+            statement.close();
+        }
+
         return result;
     }
 

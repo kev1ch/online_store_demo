@@ -107,9 +107,14 @@ public class ProductController {
 
     @SneakyThrows
     @GetMapping("/product_display")
-    public String displayProductById(@RequestParam int id) {
+    public String displayProductById(@RequestParam int product_id) {
         String result = "";
-        result = productDAO.getImage(id);
+        List<Integer> all_images = productDAO.getAllProductImages(product_id);
+        if (!all_images.isEmpty()) {
+            int first_img_id = all_images.get(0);
+            result = productDAO.getImage(first_img_id);
+        }
+
         return result;
     }
 
