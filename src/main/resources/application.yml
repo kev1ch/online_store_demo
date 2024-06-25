@@ -2,7 +2,11 @@ server:
   port: 8081
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/online_store
+    url: jdbc:h2:file:./test
     username: root
-    password:
-    driver-class-name: com.mysql.jdbc.Driver
+    password: root
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
