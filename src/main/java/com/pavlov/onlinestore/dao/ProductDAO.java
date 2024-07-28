@@ -24,8 +24,8 @@ public class ProductDAO {
 
         List<Product> result = new ArrayList<>();
         try (Connection connection = dataSource.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement("select id, name, " +
-                    "store_id, aisle, bay, stock_quantity from product");
+            PreparedStatement statement = connection.prepareStatement("SELECT pro.id, name, store_id, aisle, " +
+                    "bay, stock_quantity, rate FROM PRODUCT pro, PRICE pri WHERE pro.ID = pri.PRODUCT_ID;");
             ResultSet result_set = statement.executeQuery();
 
             while (result_set.next()) {
@@ -36,6 +36,7 @@ public class ProductDAO {
                 product.setAisle(result_set.getInt("aisle"));
                 product.setBay(result_set.getInt("bay"));
                 product.setStock_quantity(result_set.getInt("stock_quantity"));
+                product.setRate(result_set.getBigDecimal("rate"));
                 result.add(product);
             }
 

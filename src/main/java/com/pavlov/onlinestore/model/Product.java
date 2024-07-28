@@ -2,6 +2,8 @@ package com.pavlov.onlinestore.model;
 
 import lombok.Data;
 
+import java.math.BigDecimal;
+
 @Data
 public class Product {
 
@@ -11,5 +13,6 @@ public class Product {
     private int aisle;
     private int bay;
     private int stock_quantity;
+    private BigDecimal rate;
 
 }

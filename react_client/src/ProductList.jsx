@@ -28,7 +28,12 @@ function ProductList() {
                 <div className="productDescription">{this_product.description}</div>
                 <button onClick={()=>{
                     const cart_copy = [...cart];
-                    cart_copy.push({...this_product, quantity: 1});
+                    const cart_line = cart_copy.find(cart_line => cart_line.id === this_product.id);
+                    if (!cart_line) {
+                        cart_copy.push({...this_product, quantity: 1});
+                    } else {
+                        cart_line.quantity += 1;
+                    }
                     setCart(cart_copy);
                     /*navigate('/cart')*/}}>Add to Cart</button>
                 </div>))}</div>

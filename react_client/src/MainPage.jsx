@@ -1,5 +1,5 @@
 import { Outlet, Link } from "react-router-dom"
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { CartContext } from "./CartContext";
 import './MainPage.css'
 
@@ -9,6 +9,10 @@ function MainPage() {
     const [counter, setCounter] = useState(0);
     const cart_length = cart.length;
 
+    useEffect(() => {
+        document.title = "test123 " + cart_length;
+    });
+
     return(
         <>
             <header>Logo</header>
@@ -17,8 +21,6 @@ function MainPage() {
                 <Link to="/product_list">Products</Link>
                 <Link to="/cart">Cart ({cart_length})</Link>
             </nav>
-            <p>Main Page {counter}</p>
-            <button onClick={()=>{setCounter(counter+1)}}>Add</button>
             <Outlet/>
             <footer>Footer</footer>
         </>
