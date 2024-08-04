@@ -1,7 +1,8 @@
-import { Outlet, Link } from "react-router-dom"
-import { useContext, useEffect, useState } from "react"
+import { Outlet, Link } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
 import { CartContext } from "./CartContext";
-import './MainPage.css'
+import './MainPage.css';
+import logo from "./img/logo.png";
 
 function MainPage() {
 
@@ -15,7 +16,7 @@ function MainPage() {
 
     return(
         <>
-            <header>Logo</header>
+            <header><img src={logo} alt="website_logo"/></header>
             <nav>Main Menu
                 <Link to="/">Home</Link>
                 <Link to="/product_list">Products</Link>

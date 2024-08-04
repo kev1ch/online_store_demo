@@ -4,6 +4,7 @@ import { ProductContext } from "./ProductContext"
 import { CartContext } from "./CartContext";
 import './ProductList.css';
 import { Link, useNavigate } from "react-router-dom";
+import ProductImg from "./ProductImg";
 
 function ProductList() {
 
@@ -23,8 +24,9 @@ function ProductList() {
                 setProduct(this_product);
                 navigate('/product');
                 }}>
+                <ProductImg product_id = {this_product.id}/>
                 {this_product.name}</div>
-                <div className="productPrice">{this_product.price}</div>
+                <div className="productPrice">${this_product.price}</div>
                 <div className="productDescription">{this_product.description}</div>
                 <button onClick={()=>{
                     const cart_copy = [...cart];
