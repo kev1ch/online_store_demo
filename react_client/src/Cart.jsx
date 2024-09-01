@@ -29,7 +29,8 @@ function Cart() {
                         <tr>
                             <td>{cart_line.id}</td>
                             <td>{cart_line.name}</td>
-                            <td>{cart_line.description}</td>
+                            <td className="productDescription">{cart_line.description}</td>
+                            {/* TODO add extend description feature^^^ */}
                             <td><input type="number" min="1" value={cart_line.quantity} onChange={(event)=>{
                                 const cart_copy = [...cart];
                                 const product_line_quantity = cart_copy.find(product_line_quantity => product_line_quantity.id === cart_line.id);

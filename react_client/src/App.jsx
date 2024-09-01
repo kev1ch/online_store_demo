@@ -11,6 +11,8 @@ import { ProductsContext } from './ProductsContext'
 import { ProductContext } from './ProductContext'
 import { CartContext } from './CartContext'
 import ProductPage from './ProductPage'
+import LogIn from './LogIn'
+import { LogInContext } from './LogInContext'
 
 const useFetch = (url) => {
   const [data, setData] = useState(null);
@@ -32,6 +34,7 @@ function App() {
   const [products, setProducts] = useState(product_list);
   const [product, setProduct] = useState(null);
   const [cart, setCart] = useState([]);
+  const [login, setLogin] = useState({login: false});
   // const result = useFetch("http://localhost:8081/product/all");
 
   useEffect(() => {
@@ -71,18 +74,21 @@ function App() {
       <ProductsContext.Provider value={{products, setProducts}}>
         <ProductContext.Provider value={{product, setProduct}}>
           <CartContext.Provider value={{cart, setCart}}>
-            <BrowserRouter>
-              <Routes>
-                <Route path="/" element={<MainPage/>}>
-                  <Route path="/test1" element={<Component1/>}/>
-                  <Route path="/test2" element={<Component2/>}/>
-                  <Route path="/cart" element={<Cart/>}/>
-                  <Route path="/product_list" element={<ProductList/>}/>
-                  <Route path="/product" element={<ProductPage/>}/>
-                  <Route path="/" element={<ProductList/>}/>
-                </Route>
-              </Routes>
-            </BrowserRouter>
+            <LogInContext.Provider value={{login, setLogin}}>
+              <BrowserRouter>
+                <Routes>
+                  <Route path="/" element={<MainPage/>}>
+                    <Route path="/test1" element={<Component1/>}/>
+                    <Route path="/test2" element={<Component2/>}/>
+                    <Route path="/cart" element={<Cart/>}/>
+                    <Route path="/product_list" element={<ProductList/>}/>
+                    <Route path="/product" element={<ProductPage/>}/>
+                    <Route path="/login" element={<LogIn/>} />
+                    <Route path="/" element={<ProductList/>}/>
+                  </Route>
+                </Routes>
+              </BrowserRouter>
+            </LogInContext.Provider>  
           </CartContext.Provider>
         </ProductContext.Provider>
       </ProductsContext.Provider>

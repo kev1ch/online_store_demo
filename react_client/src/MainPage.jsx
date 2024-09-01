@@ -1,12 +1,14 @@
 import { Outlet, Link } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { CartContext } from "./CartContext";
+import { LogInContext } from "./LogInContext";
 import './MainPage.css';
 import logo from "./img/logo.png";
 
 function MainPage() {
 
     const {cart, setCart} = useContext(CartContext);
+    const {login, setLogin} = useContext(LogInContext);
     const [counter, setCounter] = useState(0);
     const cart_length = cart.length;
 
@@ -21,6 +23,7 @@ function MainPage() {
                 <Link to="/">Home</Link>
                 <Link to="/product_list">Products</Link>
                 <Link to="/cart">Cart ({cart_length})</Link>
+                <Link to="/login">{login.login ? "Log Out" : "Log In"}</Link>
             </nav>
             <Outlet/>
             <footer>Footer</footer>
