@@ -1,8 +1,11 @@
 package com.pavlov.onlinestore.controllers.rest;
 
 import com.pavlov.onlinestore.dao.CustomerDAO;
+import com.pavlov.onlinestore.model.AuthData;
 import com.pavlov.onlinestore.model.Product;
 import com.pavlov.onlinestore.model.User;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -10,8 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.sql.DataSource;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @RequestMapping("/account")
 @RestController
@@ -22,6 +24,8 @@ public class UserController {
 
     @Autowired
     CustomerDAO customerDAO;
+
+    private static final String KEY = "mytestkey123456789wordjava987654321bitssize";    //TODO change secret key
 
     @SneakyThrows
     @PostMapping("/register")
@@ -43,6 +47,23 @@ public class UserController {
         statement.setString(9, state_province);
         statement.execute();
         return "createUser called";
+    }
+
+    @SneakyThrows
+    @PostMapping("/auth")
+    public String getToken(@RequestBody AuthData auth_data) {
+
+        if (auth_data.getLogin().equals("test_login") && auth_data.getPassword().equals("test_password")) {
+            Long time = System.currentTimeMillis();
+            Date issued_date = new Date(time);
+            Date expiration_date = new Date(time + 600000);
+            String username = auth_data.getLogin();
+            Map<String, Object> claims = new HashMap<>();
+            String jwt = Jwts.builder().setClaims(claims).setSubject(username).setIssuedAt(issued_date).setExpiration(expiration_date).signWith(SignatureAlgorithm.HS256, KEY).compact();
+            return jwt;
+        } else {
+            throw new MyAuthException();
+        }
     }
 
     @SneakyThrows
