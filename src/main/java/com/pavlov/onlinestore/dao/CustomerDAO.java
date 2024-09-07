@@ -48,4 +48,21 @@ public class CustomerDAO {
         return result;
     }
 
+    @SneakyThrows
+    public boolean loginPasswordCheck(String login, String password) {
+        boolean result = false;
+
+        try (Connection connection = dataSource.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("SELECT email FROM customer WHERE email = ? AND passwrd = ?");
+            statement.setString(1, login);
+            statement.setString(2, password);
+            ResultSet result_set = statement.executeQuery();
+            if (result_set.next()) {
+                result = true;
+            }
+        }
+
+        return result;
+    }
+
 }

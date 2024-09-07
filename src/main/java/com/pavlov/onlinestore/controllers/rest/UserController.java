@@ -8,6 +8,8 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.sql.DataSource;
@@ -51,18 +53,18 @@ public class UserController {
 
     @SneakyThrows
     @PostMapping("/auth")
-    public String getToken(@RequestBody AuthData auth_data) {
+    public ResponseEntity<String> getToken(@RequestBody AuthData auth_data) {
 
-        if (auth_data.getLogin().equals("test_login") && auth_data.getPassword().equals("test_password")) {
+        if (customerDAO.loginPasswordCheck(auth_data.getLogin(), auth_data.getPassword())) {
             Long time = System.currentTimeMillis();
             Date issued_date = new Date(time);
             Date expiration_date = new Date(time + 600000);
             String username = auth_data.getLogin();
             Map<String, Object> claims = new HashMap<>();
             String jwt = Jwts.builder().setClaims(claims).setSubject(username).setIssuedAt(issued_date).setExpiration(expiration_date).signWith(SignatureAlgorithm.HS256, KEY).compact();
-            return jwt;
+            return ResponseEntity.status(HttpStatus.OK).body(jwt);
         } else {
-            throw new MyAuthException();
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Wrong login/password");
         }
     }
 
