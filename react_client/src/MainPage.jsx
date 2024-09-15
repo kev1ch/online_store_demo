@@ -24,6 +24,7 @@ function MainPage() {
                 <Link to="/product_list">Products</Link>
                 <Link to="/cart">Cart ({cart_length})</Link>
                 <Link to="/login">{login.login ? "Log Out" : "Log In"}</Link>
+                <Link to="/admin">Admin</Link>
             </nav>
             <Outlet/>
             <footer>Footer</footer>

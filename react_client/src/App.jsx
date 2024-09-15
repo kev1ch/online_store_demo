@@ -13,6 +13,7 @@ import { CartContext } from './CartContext'
 import ProductPage from './ProductPage'
 import LogIn from './LogIn'
 import { LogInContext } from './LogInContext'
+import Admin from './Admin'
 
 const useFetch = (url) => {
   const [data, setData] = useState(null);
@@ -84,6 +85,7 @@ function App() {
                     <Route path="/product_list" element={<ProductList/>}/>
                     <Route path="/product" element={<ProductPage/>}/>
                     <Route path="/login" element={<LogIn/>} />
+                    <Route path="/admin" element={<Admin/>} />
                     <Route path="/" element={<ProductList/>}/>
                   </Route>
                 </Routes>

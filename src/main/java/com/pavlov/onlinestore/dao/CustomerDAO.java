@@ -49,6 +49,22 @@ public class CustomerDAO {
     }
 
     @SneakyThrows
+    public List<String> getRolesByLogin(String login) {
+        List<String> result = new ArrayList<>();
+        try (Connection connection = dataSource.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(
+                    "SELECT s.role_name FROM customer c, site_role s, user_role u WHERE u.customer_id = c.id AND u.role_id = s.id AND c.email = ?");
+            statement.setString(1, login);
+            ResultSet result_set = statement.executeQuery();
+            while (result_set.next()) {
+                String role_name = result_set.getString(1);
+                result.add(role_name);
+            }
+        }
+        return result;
+    }
+
+    @SneakyThrows
     public boolean loginPasswordCheck(String login, String password) {
         boolean result = false;
 

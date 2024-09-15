@@ -23,6 +23,19 @@ create table customer(
 	state_province varchar(255)
 );
 
+CREATE TABLE site_role(
+	id int PRIMARY KEY,
+	role_name varchar(255)
+);
+
+CREATE TABLE user_role(
+	id int PRIMARY KEY auto_increment,
+	customer_id int,
+	role_id int,
+	FOREIGN KEY (customer_id) REFERENCES customer(id) ON DELETE CASCADE,
+	FOREIGN KEY (role_id) REFERENCES site_role(id) ON DELETE cascade
+);
+
 create table product(
 	id int primary key auto_increment,
 	name varchar(255),
@@ -130,6 +143,13 @@ INSERT INTO customer (id, email, passwrd, first_name, last_name, phone_number, a
 (1, 'test1@email.com', 'test12345', 'John', 'Doe', '1231231234', 'Main Street 5', 'Kingston', 'A1B 2C3', 'ON');
 INSERT INTO customer (id, email, passwrd, first_name, last_name, phone_number, address_line, city, postal_code, state_province) values
 (2, 'test2@email.com', 'test12345', 'Jane', 'Doe', '3213214321', 'Main Street 5', 'Kingston', 'A1B 2C3', 'ON');
+
+insert INTO site_role (id, role_name) VALUES (1, 'admin');
+insert INTO site_role (id, role_name) VALUES (2, 'customer');
+
+INSERT INTO user_role (customer_id, role_id) VALUES (1, 1);
+INSERT INTO user_role (customer_id, role_id) VALUES (1, 2);
+INSERT INTO user_role (customer_id, role_id) VALUES (2, 2);
 
 insert into cart (id, customer_id) values (1, 1);
 insert into cart (id, customer_id) values (2, 2);

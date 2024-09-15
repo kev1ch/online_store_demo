@@ -75,4 +75,8 @@ public class UserController {
         return customerDAO.allUsers();
     }
 
+    @GetMapping("/roles")
+    public List<String> getRolesByLogin(@RequestParam String login) {
+        return customerDAO.getRolesByLogin(login);
+    }
 }
