@@ -25,7 +25,10 @@ function LogIn() {
         const response = await(fetch('http://localhost:8081/account/auth', requestOptions));
 
         if (response.ok) {
-            const jwt = await(response.text());  
+            const jwt = await(response.text());
+            var new_login = {...login};
+            new_login.jwt = jwt;
+            setLogin(new_login);
             console.log(jwt);
           } else {
             throw "auth error: incorrect login/password";
@@ -50,6 +53,7 @@ function LogIn() {
                         var new_login = {...login};
                         new_login.login = !login.login;
                         setLogin(new_login);
+                        console.log(new_login);
                     }}>Log In</button>
                 </>
             :

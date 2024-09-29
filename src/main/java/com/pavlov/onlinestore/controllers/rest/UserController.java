@@ -61,7 +61,10 @@ public class UserController {
             Date expiration_date = new Date(time + 600000);
             String username = auth_data.getLogin();
             Map<String, Object> claims = new HashMap<>();
+            List<String> roles = customerDAO.getRolesByLogin(username);
+            claims.put("role", roles);
             String jwt = Jwts.builder().setClaims(claims).setSubject(username).setIssuedAt(issued_date).setExpiration(expiration_date).signWith(SignatureAlgorithm.HS256, KEY).compact();
+            // String jwt = Jwts.builder().setSubject(username).setIssuedAt(issued_date).setExpiration(expiration_date).signWith(SignatureAlgorithm.HS256, KEY).content("{role:test_role}").compact();
             return ResponseEntity.status(HttpStatus.OK).body(jwt);
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Wrong login/password");
